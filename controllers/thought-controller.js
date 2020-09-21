@@ -92,7 +92,7 @@ const thoughtController = {
                     res.status(404).json({ message: 'Thought created but no user found with this id' });
                     return;
                 }
-                res.json({ message: 'Thought created'});
+                res.json({ message: 'Thought deleted'});
             })
             .catch(err => {
                 console.log(err);
@@ -106,8 +106,9 @@ const thoughtController = {
     addReaction({ params, body }, res){
         Thought.findOneAndUpdate(
             { _id: params.thoughtId },
-            { $push: { reactions: body} },
-            { new: true, runValidators: true })
+            { $push: { reactions: body } },
+            { new: true, runValidators: true }
+            )
             .then(dbThoughtData => {
                 // If no thought is found, send 404
                 if (!dbThoughtData) {
