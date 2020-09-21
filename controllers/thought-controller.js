@@ -123,7 +123,7 @@ const thoughtController = {
     },
 
     //remove friend
-    removeReaction({ params, body }, res){
+    removeReaction({ params }, res){
         Thought.findOneAndUpdate(
             { _id: params.thoughtId },
             { $pull: { reactions: { reactionId: params.reactionId}} },
