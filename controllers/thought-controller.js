@@ -71,7 +71,76 @@ const thoughtController = {
             });
     },
 
-    
+    //delete thought
+    deleteThought({ params }, res){
+        Thought.findOneAndDelete({ _id: params.id})
+            .then(dbThoughtData => {
+                // If no thought is found, send 404
+                if (!dbThoughtData) {
+                    res.status(404).json({ message: 'No thought found with this id!' });
+                    return;
+                }
+                return User.findOneAndUpdate(
+                    { thoughts: params.id },
+                    { $pull: { thoughts: params.id}},
+                    { new: true}
+                );
+            })
+            .then(dbUserData => {
+                // If no user is found, send 404
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'Thought created but no user found with this id' });
+                    return;
+                }
+                res.json({ message: 'Thought created'});
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(400).json(err);
+            });
+    },
+
+
+    //REACTION METHODS
+    //add friend
+    addReaction({ params, body }, res){
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $push: { reactions: body} },
+            { new: true, runValidators: true })
+            .then(dbThoughtData => {
+                // If no thought is found, send 404
+                if (!dbThoughtData) {
+                    res.status(404).json({ message: 'No thought found with this id!' });
+                    return;
+                }
+                res.json(dbThoughtData);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(400).json(err);
+            });
+    },
+
+    //remove friend
+    removeReaction({ params, body }, res){
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $pull: { reactions: { reactionId: params.reactionId}} },
+            { new: true})
+            .then(dbThoughtData => {
+                // If no thought is found, send 404
+                if (!dbThoughtData) {
+                    res.status(404).json({ message: 'No thought found with this id!' });
+                    return;
+                }
+                res.json(dbThoughtData);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(400).json(err);
+            });
+    }
 };
 
 module.exports = thoughtController;
