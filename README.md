@@ -23,7 +23,7 @@ Please view the following videos for a walkthrough:
 
 * [Friend Routes](https://drive.google.com/file/d/1DFtlMmtTu2U8bmmRGVJax44dPbHpc8x-/view)
 
-* [Reaction Routes](https://drive.google.com/file/d/1DFtlMmtTu2U8bmmRGVJax44dPbHpc8x-/view)
+* [Reaction Routes](https://drive.google.com/file/d/1iW1LygYMkis-P_DRkh3POsljlVVVIb_r/view)
 
 ## Builtwith
 * JS
